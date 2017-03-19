@@ -1,0 +1,47 @@
+Hostname "<%= node['hostname'] %>"
+FQDNLookup true
+
+LoadPlugin syslog
+
+<Plugin syslog>
+	LogLevel info
+</Plugin>
+
+LoadPlugin df
+LoadPlugin entropy
+LoadPlugin interface
+LoadPlugin load
+LoadPlugin memory
+LoadPlugin processes
+LoadPlugin rrdtool
+LoadPlugin users
+LoadPlugin write_graphite
+LoadPlugin network
+
+<Plugin df>
+<%
+`df -l | grep -v 'osd\\|run\\|sys\\|\\ /dev\\|Mounted\\|vagrant' | awk '{print $6}'`.each_line { |line|
+%>
+    MountPoint "<%= line.chomp %>"
+<%
+}
+%>
+    ValuesPercentage true
+</Plugin>
+
+<Plugin interface>
+	Interface "<%= node['network']['default_interface'] %>"
+	IgnoreSelected false
+</Plugin>
+
+<Plugin rrdtool>
+	DataDir "/var/lib/collectd/rrd"
+</Plugin>
+
+<Plugin "network">
+  Server "<%= node['collectd']['server'] %>" "25826" 
+</Plugin>
+
+<Include "<%= node['collectd']['confdir'] %>">
+	Filter "*.conf"
+</Include>

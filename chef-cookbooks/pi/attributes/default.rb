@@ -1,0 +1,1 @@
+default["monitor"]["master_address"] = "localhost"
