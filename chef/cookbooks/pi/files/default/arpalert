@@ -1,0 +1,62 @@
+#!/usr/bin/python
+#
+
+import logging
+import graypy
+import sys
+
+#
+# Arguments sent by ArpAlert are :
+# 1 : MAC Address
+# 2 : IP Address
+# 3 : supp (used with unathrq alert)
+# 4 : interface
+# 5 : Type of alert (cf arpalert.conf)
+#
+arglen = str(len(sys.argv))
+# Intruder MAC address
+intruder_MAC=sys.argv[1]
+
+# Intruder IP address
+intruder_IP=sys.argv[2]
+intruder_IPLast=intruder_IP.split('.')[3]
+
+if (int(intruder_IPLast) > 0 and int(intruder_IPLast) < 10):
+	sys.exit(0)
+
+if (int(intruder_IPLast) > 244 and int(intruder_IPLast) < 255):
+        sys.exit(0)
+
+# Intruder Interface
+intruder_Iface=sys.argv[4]
+
+#Alert Type
+if (str(sys.argv[5])=="0"):
+        intruder_AlertType = "IP change"
+elif (str(sys.argv[5])=="1"):
+        intruder_AlertType = "Mac address already detected but not in white list"
+elif (str(sys.argv[5])=="2"):
+        intruder_AlertType = "Mac address in black list"
+elif (str(sys.argv[5])=="3"):
+        intruder_AlertType = "New mac address"
+elif (str(sys.argv[5])=="4"):
+        intruder_AlertType = "Unauthorized arp request"
+elif (str(sys.argv[5])=="5"):
+        intruder_AlertType = "Abusive number of arp request detected"
+elif (str(sys.argv[5])=="6"):
+        intruder_AlertType = "Ethernet mac address different from arp mac address"
+elif (str(sys.argv[5])=="7"):
+        intruder_AlertType = "Flood detected"
+elif (str(sys.argv[5])=="8"):
+        intruder_AlertType = "New mac address whithout ip address"
+else:
+	intruder_AlertType = "other"
+
+my_logger = logging.getLogger('test_logger')
+my_logger.setLevel(logging.DEBUG)
+
+handler = graypy.GELFHandler('graylog.el.nist.gov', 12201, facility="arpalert")
+my_logger.addHandler(handler)
+
+MESSAGE="mac:"+intruder_MAC+" IP:"+intruder_IP+" Interface:"+intruder_Iface+" Alert:"+intruder_AlertType
+my_logger.debug(MESSAGE)

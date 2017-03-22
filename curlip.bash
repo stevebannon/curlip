@@ -9,7 +9,7 @@ From: "Steve Bannon" <steven.bannon@gmail.com>
 To: "Steve Bannon" <sbannon@nist.gov>
 Subject: IP for $HOSTNAME, serial# $SERIAL
 
-`ifconfig -a`
+`for i in \`ifconfig | grep -v '^\ \|^$\|lo' | awk '{print $1}'\`; do echo $i \`ifconfig $i | grep HWaddr | awk '{print $5}'\` \`ifconfig $i | grep inet\ addr | awk '{print $2}' | awk -F: '{print $2}'\`; done`
 EOT
 
 curl --url 'smtps://smtp.gmail.com:465' --ssl-reqd   --mail-from 'steven.bannon@gmail.com' --mail-rcpt 'sbannon@nist.gov' --upload-file mail.txt --user 'steven.bannon@gmail.com:em2wnwrx' --insecure
