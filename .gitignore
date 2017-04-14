@@ -1,3 +1,6 @@
 chef/chef-client-running.pid
 chef/chef-stacktrace.out
 mail.txt
+.DS_Store
+*.lock
+.gitignore
