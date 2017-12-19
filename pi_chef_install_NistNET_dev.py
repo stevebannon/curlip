@@ -49,8 +49,8 @@ f = open("/tmp/ruby_2.3.3_armhf.deb", "w")
 call(["curl","http://ftp.us.debian.org/debian/pool/main/r/ruby-defaults/ruby_2.3.3_armhf.deb"], stdout=f)
 f.closed
 
-f = open("/tmp/ruby_2.3.3_armhf.deb", "w")
-call(["curl","http://ftp.us.debian.org/debian/pool/main/r/ruby-defaults/ruby_2.3.3_armhf.deb"], stdout=f)
+f = open("/tmp/ruby-dev_2.3.3_armhf.deb", "w")
+call(["curl","http://ftp.us.debian.org/debian/pool/main/r/ruby-defaults/ruby-dev_2.3.3_armhf.deb"], stdout=f)
 f.closed
 
 call(["apt-get","-y","remove","ruby"])
