@@ -27,6 +27,26 @@ print ( hostname )
 
 call(["hostname",hostname])
 
+with open('/etc/hosts', 'r') as file:
+    data = file.readlines()
+    file.close()
+
+i=0
+
+while i < len(data):
+
+    if re.match("127.0.1.1",data[i]) is not None:
+      data[i] = "127.0.1.1\t{}.el.nist.gov {}".format(hostname,hostname)
+    i+=1
+
+with open('/etc/hosts', 'w') as file:
+    file.writelines( data )
+    file.close()
+
+file = open('/etc/hostname', 'w')
+file.write("{}\n".format(hostname))
+file.close
+
 os.makedirs("/etc/chef", exist_ok=True)
 
 f = open("/etc/chef/client.rb", "w")
