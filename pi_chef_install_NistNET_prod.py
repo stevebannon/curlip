@@ -62,7 +62,7 @@ f.write("ssl_verify_mode :verify_none\n")
 f.closed
 
 f = open("/etc/chef/validation.pem", "w")
-call(["curl","http://tftp.el.nist.gov/chef/validation.pem.dev"], stdout=f)
+call(["curl","http://tftp.el.nist.gov/chef/validation.pem"], stdout=f)
 f.closed
 
 f = open("/tmp/ruby_2.3.3_armhf.deb", "w")
