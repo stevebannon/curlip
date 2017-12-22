@@ -56,7 +56,7 @@ f.write("node_name '")
 f.write(hostname)
 f.write(".el.nist.gov")
 f.write("'\n")
-f.write("chef_server_url 'https://chefdev.el.nist.gov'\n")
+f.write("chef_server_url 'https://chefprod.el.nist.gov'\n")
 f.write("validation_client_name 'chef-validator'\n")
 f.write("ssl_verify_mode :verify_none\n")
 f.closed
