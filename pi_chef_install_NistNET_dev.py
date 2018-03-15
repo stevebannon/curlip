@@ -65,17 +65,19 @@ f = open("/etc/chef/validation.pem", "w")
 call(["curl","http://tftp.el.nist.gov/chef/validation.pem.dev"], stdout=f)
 f.closed
 
-f = open("/tmp/ruby_2.3.3_armhf.deb", "w")
-call(["curl","http://ftp.us.debian.org/debian/pool/main/r/ruby-defaults/ruby_2.3.3_armhf.deb"], stdout=f)
-f.closed
+# f = open("/tmp/ruby_2.3.3_armhf.deb", "w")
+# call(["curl","http://ftp.us.debian.org/debian/pool/main/r/ruby-defaults/ruby_2.3.3_armhf.deb"], stdout=f)
+# f.closed
 
-f = open("/tmp/ruby-dev_2.3.3_armhf.deb", "w")
-call(["curl","http://ftp.us.debian.org/debian/pool/main/r/ruby-defaults/ruby-dev_2.3.3_armhf.deb"], stdout=f)
-f.closed
+# f = open("/tmp/ruby-dev_2.3.3_armhf.deb", "w")
+# call(["curl","http://ftp.us.debian.org/debian/pool/main/r/ruby-defaults/ruby-dev_2.3.3_armhf.deb"], stdout=f)
+# f.closed
 
 call(["apt-get","-y","remove","ruby"])
-call(["dpkg","--install","/tmp/ruby_2.3.3_armhf.deb"])
-call(["dpkg","--install","/tmp/ruby-dev_2.3.3_armhf.deb"])
+# call(["dpkg","--install","/tmp/ruby_2.3.3_armhf.deb"])
+# call(["dpkg","--install","/tmp/ruby-dev_2.3.3_armhf.deb"])
+call(["apt-get","-y","install","ruby2.3"])
+call(["apt-get","-y","install","ruby2.3-dev"])
 call(["apt-get","-f","-y","install"])
 call(["gem","install","chef","--no-ri","--no-rdoc","-v","12.19.36"])
 call(["gem","install","ruby-shadow","--no-ri","--no-rdoc"])
